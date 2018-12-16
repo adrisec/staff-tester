@@ -8,6 +8,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 from tkinter import messagebox
+import pickle
 
 
 class GUI():
@@ -15,15 +16,13 @@ class GUI():
 	GUI Interface management class
 	It uses one window and two frames to navigate (main frame and settings frame)
 
-	TODO: finish navigation bar functionality
-	TODO: add an entry option to change attachment name (it helps on mobile devices and maybe on desktop OS to cheat targets)
-
+	TODO: Improve help frame
 	"""
 
 	def __init__(self):
 
 		self.main = Tk()
-		self.main.geometry("700x400")
+		self.main.geometry("700x500")
 		self.main.resizable(width=False,height=False)
 		self.main.configure(bg="beige")
 		self.main.title("Staff Tester")
@@ -38,6 +37,7 @@ class GUI():
 		self.smtp_password = StringVar(self.main,value="password")
 		self.sent_from = StringVar(self.main,value="Enterprise CEO <ceo@enterprise.com>")
 		self.subject = StringVar(self.main,value="Important file!")
+		self.attachment_name = StringVar(self.main,value="")
 
 		menu = Menu(self.main)
 		self.main.config(menu=menu)
@@ -45,14 +45,16 @@ class GUI():
 		mainmenu = Menu(menu)
 		menu.add_cascade(label="File", menu=mainmenu)
 		mainmenu.add_command(label="New",command=self.create_new)
+		mainmenu.add_command(label="Save As",command=self.save)
+		mainmenu.add_command(label="Open",command=self.open)
 		mainmenu.add_separator()
-		mainmenu.add_command(label="Close",command=self.create_new)
+		mainmenu.add_command(label="Close",command=self.finish)
 
 		settingsmenu = Menu(menu)
 		menu.add_cascade(label="Configuration", menu=settingsmenu)
 		settingsmenu.add_command(label="Settings",command=self.configuration_frame)
 		settingsmenu.add_separator()
-		settingsmenu.add_command(label="Help",command=self.create_new)
+		settingsmenu.add_command(label="Help",command=self.help)
 		self.frame = None
 		self.main_frame()
 
@@ -65,7 +67,7 @@ class GUI():
 			self.frame.destroy()
 
 		self.frame = Frame(self.main)
-		self.frame.configure(bg="beige",width=700,height=400)
+		self.frame.configure(bg="beige",width=700,height=500)
 		self.frame.pack()
 
 		
@@ -91,20 +93,61 @@ class GUI():
 		attachment_button.grid(row=4,column=0,pady=10,padx=10,ipady=5,ipadx=5)
 		attachment_button_label = Label(self.frame, textvariable=self.fattachment,width=50,bg="white",borderwidth=2, relief="groove",anchor=W)
 		attachment_button_label.grid(row=4,column=1,pady=10,padx=10,ipady=5,ipadx=5)
+
+		attachment_name_label = Label(self.frame,text="Attachment name (if blank, we'll\nuse the real attachment name)",bg="beige",anchor=W)
+		attachment_name_label.grid(row=5,column=0,pady=10,padx=10,ipady=5,ipadx=5)
+		attachment_name_entry = Entry(self.frame,text=self.attachment_name,bg="white",width=50)
+		attachment_name_entry.grid(row=5,column=1,pady=10,padx=10,ipady=5,ipadx=5)
 	
-		send_button = Button(self.frame, text="Send mails!",command=self.send_mails).grid(row=5,column=0,pady=10,padx=10,ipady=5,ipadx=5)
+		send_button = Button(self.frame, text="Send mails!",command=self.send_mails).grid(row=6,column=0,pady=10,padx=10,ipady=5,ipadx=5)
 		#send_button.place(x=10,y=180,width=147,height=40)
 			
 		exit_button = Button(self.frame, text="Exit",command=self.main.destroy)
-		exit_button.grid(row=5,column=1,pady=10,padx=10,ipady=5,ipadx=5)
+		exit_button.grid(row=6,column=1,pady=10,padx=10,ipady=5,ipadx=5)
 		
 
 	def create_new(self):
 		"""
-		Foo function used by all not implemented navigation bar functions
+		Creates a new session
 		
 		"""
 		self.main.destroy()
+		gui = GUI()
+		gui.main.mainloop()
+
+	def finish(self):
+		self.main.destroy()
+
+	def save(self):
+		file = filedialog.asksaveasfile(title="Save File",mode='wb', defaultextension=".stf")
+		if(file != None):
+			dump = dumpObject(self.ftarget,self.fmail,self.fattachment,self.smtp_server,self.smtp_port,
+							self.smtp_user,self.smtp_password,self.sent_from,self.subject,self.attachment_name)
+			pickle.dump(dump, file, pickle.HIGHEST_PROTOCOL)
+			file.close()
+			messagebox.showinfo("Saved", "Data saved correctly")
+
+
+	def open(self):
+		file = filedialog.askopenfile(filetypes =((("STF files", "*.stf"),
+											("All files", "*.*") )), title="Choose a file",mode="rb")
+		if(file != None):
+			try:
+				dump = pickle.load(file)
+				self.ftarget.set(dump.ftarget)
+				self.fmail.set(dump.fmail)
+				self.fattachment.set(dump.fattachment)
+				self.smtp_server.set(dump.smtp_server)
+				self.smtp_port.set(dump.smtp_port)
+				self.smtp_user.set(dump.smtp_user)
+				self.smtp_password.set(dump.smtp_password)
+				self.sent_from.set(dump.sent_from)
+				self.subject.set(dump.subject)
+				self.attachment_name.set(dump.attachment_name)
+				messagebox.showinfo("Open File", "Data loaded correctly")
+			except:
+				messagebox.showerror("ERROR", "Error opening file. Check if it's corrupted or blank")
+			file.close()
 
 	def configuration_frame(self):
 		"""
@@ -112,7 +155,7 @@ class GUI():
 		
 		"""
 		self.frame.destroy()
-		self.frame = Frame(self.main,width=700, height=400)
+		self.frame = Frame(self.main,width=700, height=500)
 		self.frame.configure(bg='beige')
 		self.frame.pack()
 
@@ -142,6 +185,24 @@ class GUI():
 		back_button = Button(self.frame, text='Back and save', command=self.main_frame)
 		back_button.grid(row=5,columnspan=2,pady=10,padx=10,ipady=5,ipadx=5)
 
+	def help(self):
+		help_window = Tk()
+		help_window.geometry("650x300")
+		help_window.resizable(width=False,height=False)
+		help_window.configure(bg="beige")
+		help_window.title("Help")
+
+		scroll = Scrollbar(help_window)
+		text = Text(help_window,bg="beige")
+		scroll.pack(side=RIGHT, fill=Y)
+		text.pack(side=LEFT, fill=Y)
+		scroll.config(command=text.yview)
+		text.config(yscrollcommand=scroll.set)
+		str_text = "This tool can help you to check if your employees are succesfully aware about phishing attacks.\n"
+		str_text+= "You can configure your STMP configuration at settings menu and your email configuration at the main page.\n"
+		str_text += "Author: Adrian Navas <adrian dot navas dot ajenjo1@gmail dot com>"
+		text.insert(END, str_text)
+		text.configure(state=DISABLED)
 
 	def get_target_file(self):
 		"""
@@ -186,6 +247,21 @@ class GUI():
 				staff_tester.init(self)
 			except Exception as e:
 				messagebox.showerror("ERROR", e)
+
+class dumpObject():
+	def __init__(self,ftarget,fmail,fattachment,smtp_server,smtp_port,smtp_user,smtp_password,sent_from,subject,attachment_name):
+		self.ftarget = ftarget.get()
+		self.fmail = fmail.get()
+		self.fattachment = fattachment.get()
+
+		self.smtp_server = smtp_server.get()
+		self.smtp_port = smtp_port.get()
+		self.smtp_user = smtp_user.get()
+		self.smtp_password = smtp_password.get()
+		self.sent_from = sent_from.get()
+		self.subject = subject.get()
+		self.attachment_name = attachment_name.get()
+
 
 if __name__ == '__main__':
 	gui = GUI()

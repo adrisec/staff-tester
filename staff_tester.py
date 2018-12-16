@@ -12,7 +12,6 @@ import os
 
 error_msg = "[!] ERROR:"
 
-#TODO: change all print() to exceptions so that can be used at GUI module to show errors correctly.
 #TODO: add if it's possible more security to conections.
 #TODO: check user inputs to avoid possible attacks
 #TODO: documentation
@@ -43,8 +42,11 @@ def send_mail(conf,to):
 	fattachment = conf["attachment"]
 	if(fattachment != ""):
 		attachment = MIMEApplication(open(fattachment,"rb").read())
-		split = fattachment.split("/")
-		fname = split[-1]
+		if(conf["attachment_name"] == ""):
+			split = fattachment.split("/")
+			fname = split[-1]
+		else:
+			fname = conf["attachment_name"]
 		attachment.add_header('Content-Disposition', 'attachment', filename=fname)
 		mime_message.attach(attachment)
 
@@ -132,6 +134,7 @@ def init(params):
 	conf["smtp_port"] = params.smtp_port.get()
 	conf["subject"] = params.subject.get()
 	conf["attachment"] = params.fattachment.get()
+	conf["attachment_name"] = params.attachment_name.get()
 
 	for key in conf_req:
 		if not key in conf:
