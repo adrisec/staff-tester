@@ -18,7 +18,7 @@ If you want to add any attachment to simulate an attack by an infected file. You
 
 # Installation
 
-*Windows*
+### Windows
 You need to have installed [Python 3.0 or higher](https://www.python.org/ftp/python/3.7.1/Python-3.7.1.tar.xz) or higher and [git](https://code.google.com/p/msysgit/downloads/list)
 
 Run this commands:
@@ -28,7 +28,7 @@ Run this commands:
 	./python3 gui.py
 ```
 
-*Ubuntu/Debian*
+### Ubuntu/Debian
 You need to have installed Python 3.0 or higher git
 
 
