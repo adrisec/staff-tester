@@ -1,5 +1,6 @@
 """
 Staff Tester project
+-Main working module-
 Author: Adrian Navas <adrian dot navas dot ajenjo1 @ gmail dot com>
 """
 
@@ -59,8 +60,9 @@ def send_mail(conf,to):
 		server.ehlo()
 		server.login(smtp_user, smtp_password)
 		server.sendmail(conf["sent_from"], to, mime_message.as_string())
-		print("Sent")
 		server.close()
+		return True
+
 	except Exception as e:
 		raise Exception(e)
 
@@ -172,4 +174,4 @@ def init(params):
 		try:
 			send_mail(conf,to)
 		except Exception as e:
-			raise Exception(error)
+			raise Exception(e)

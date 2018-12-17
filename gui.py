@@ -1,5 +1,6 @@
 """
 Staff Tester project
+-GUI module-
 Author: Adrian Navas <adrian dot navas dot ajenjo1 @ gmail dot com>
 """
 
@@ -108,18 +109,29 @@ class GUI():
 
 	def create_new(self):
 		"""
-		Creates a new session
+		Create a new session command
 		
 		"""
-		self.main.destroy()
-		gui = GUI()
-		gui.main.mainloop()
+		if(messagebox.askyesno(message="Are you sure you want close the current session and create a new one?", title="New")):
+			self.main.destroy()
+			gui = GUI()
+			gui.main.mainloop()
 
 	def finish(self):
-		self.main.destroy()
+		"""
+		Close the session command
+		
+		"""
+		if(messagebox.askyesno(message="Are you sure you want to close this session?", title="Close")):
+			self.main.destroy()
 
 	def save(self):
-		file = filedialog.asksaveasfile(title="Save File",mode='wb', defaultextension=".stf")
+		"""
+		Save current session command
+		
+		"""
+		file = filedialog.asksaveasfile(title="Save File",mode='wb', filetypes =((("STF files", "*.stf"),
+											("All files", "*.*") )))
 		if(file != None):
 			dump = dumpObject(self.ftarget,self.fmail,self.fattachment,self.smtp_server,self.smtp_port,
 							self.smtp_user,self.smtp_password,self.sent_from,self.subject,self.attachment_name)
@@ -129,6 +141,10 @@ class GUI():
 
 
 	def open(self):
+		"""
+		Open a presaved session command
+		
+		"""
 		file = filedialog.askopenfile(filetypes =((("STF files", "*.stf"),
 											("All files", "*.*") )), title="Choose a file",mode="rb")
 		if(file != None):
@@ -151,7 +167,7 @@ class GUI():
 
 	def configuration_frame(self):
 		"""
-		Creates the configuration frame
+		Create the configuration frame command
 		
 		"""
 		self.frame.destroy()
@@ -186,6 +202,10 @@ class GUI():
 		back_button.grid(row=5,columnspan=2,pady=10,padx=10,ipady=5,ipadx=5)
 
 	def help(self):
+		"""
+		Open help frame command
+		
+		"""
 		help_window = Tk()
 		help_window.geometry("650x300")
 		help_window.resizable(width=False,height=False)
@@ -244,11 +264,16 @@ class GUI():
 			messagebox.showerror("ERROR", "You must select mail template file name")
 		else:
 			try:
-				staff_tester.init(self)
+				if(staff_tester.init(self)):
+					messagebox.showinfo("Success", "Emails sent succesfully!")
 			except Exception as e:
 				messagebox.showerror("ERROR", e)
 
 class dumpObject():
+	"""
+	Class used to save all configuration params into a file
+		
+	"""
 	def __init__(self,ftarget,fmail,fattachment,smtp_server,smtp_port,smtp_user,smtp_password,sent_from,subject,attachment_name):
 		self.ftarget = ftarget.get()
 		self.fmail = fmail.get()
