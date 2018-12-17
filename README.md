@@ -44,12 +44,12 @@ Once installed, to run the GUI run this commands:
 	./python3 gui.py
 ```
 
-#Configuration parameters
+# Configuration parameters
 To configure the target list add all the target mails (one per line)
 You can use # to add one-line comment
 
 
-#Disclaimer
+# Disclaimer
 This tool is only for testing or learning purposes and can only be used where strict consent has been given. Do not use this for any illegal purposes.
 Use this tool by your own responsability.
 
