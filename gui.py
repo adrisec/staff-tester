@@ -5,6 +5,7 @@ Author: Adrian Navas <adrian dot navas dot ajenjo1 @ gmail dot com>
 """
 
 import staff_tester
+import tkinter
 from tkinter import * 
 from tkinter import ttk
 from tkinter import filedialog
@@ -22,7 +23,7 @@ class GUI():
 
 	def __init__(self):
 
-		self.main = Tk()
+		self.main = Tk(className="staff-tester")
 		self.main.geometry("700x500")
 		self.main.resizable(width=False,height=False)
 		self.main.configure(bg="beige")
@@ -42,6 +43,8 @@ class GUI():
 
 		menu = Menu(self.main)
 		self.main.config(menu=menu)
+		
+		self.main.call('wm','iconphoto',self.main._w,tkinter.Image("photo", file="media/icon.png"))
 
 		mainmenu = Menu(menu)
 		menu.add_cascade(label="File", menu=mainmenu)
@@ -206,7 +209,7 @@ class GUI():
 		Open help frame command
 		
 		"""
-		help_window = Tk()
+		help_window = Tk(className="Help")
 		help_window.geometry("650x300")
 		help_window.resizable(width=False,height=False)
 		help_window.configure(bg="beige")

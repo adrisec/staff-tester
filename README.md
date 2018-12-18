@@ -29,7 +29,7 @@ Run this commands:
 ```
 
 ### Ubuntu/Debian
-You need to have installed Python 3.0 or higher git
+You need to have installed Python 3.0 or higher and git
 
 
 Run this commands to install all requirements:
@@ -38,10 +38,10 @@ Run this commands to install all requirements:
 	$ apt-get install python3
 ```
 Once installed, to run the GUI run this commands:
-```
-	git clone https://github.com/adrinavaas/staff-tester.git
-	cd staff-tester
-	./python3 gui.py
+```bash
+	$ git clone https://github.com/adrinavaas/staff-tester.git
+	$ cd staff-tester
+	$ ./python3 gui.py
 ```
 
 # Configuration parameters
@@ -55,3 +55,6 @@ Use this tool by your own responsability.
 
 # Contributors
 Adrian Navas <adrian dot navas dot ajenjo1@gmail dot com> (http://github.com/adrinavaas)
+
+#### Special thanks
+Icon made by Freepik from www.flaticon.com 
