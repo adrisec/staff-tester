@@ -51,7 +51,9 @@ To add images, please add them directly from internet (otherwise they are not go
 If you want to add any attachment to simulate an attack by an infected file. You can also change the showing name of the attachment in the main panel.  
 
 ### Customizing mails
-To create a customized mail, you can use the new feature added. You can specify on the HTML template parameters by introducing them between brackets as at this example:
+To create a customized mail, you can use the new feature added. Now you can create customized mails for each target in the list by adding specific parameters as name or surname or any link (maybe to a PHP file hosted to know wich ones has clicked on it?)  
+
+You can specify on the HTML template parameters by introducing them between brackets as at this example:
 ```html
 	<html>
   		<head></head>
