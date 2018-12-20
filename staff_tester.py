@@ -16,7 +16,8 @@ error_msg = "[!] ERROR:"
 #TODO: add if it's possible more security to conections.
 #TODO: check user inputs to avoid possible attacks
 #TODO: documentation
-#TODO: management of owned employees (possible PHP to handle clicked links or downloaded attachments???????)
+#TODO: add used libraries locally
+
 def open_server(conf):
 	"""Creates a server and the mime_message without the body
 	Sends mails to all targets using conf dict creating a MIME message
@@ -76,6 +77,19 @@ def send_mail(server,to,conf,body):
 	
 
 def parse_mail(text,params,mail):
+	"""Parses mail line by line, checking if there are any parameter included at mail and if so,
+	it changes them using the params argument received
+
+
+	Params:
+	text -- contains html body as string
+	params -- contains params used to fill the mail custom params
+	mail -- target mail. Used only in case of error
+
+	Returns:
+	new html custom message
+	
+	"""
 	body = ""
 	regex = re.compile(r"[^\[]*\[[^\]]+\][\[.\]]*")
 	regex_find = re.compile(r"\[[^\[ ]*\]")
@@ -170,7 +184,7 @@ def init(params):
 	#Target mails reading
 	to_params = {}
 	try:
-		g = open("mail.lst","r")
+		g = open(params.ftarget.get(),"r")
 	except:
 		error = error_msg + " can't open target list file, check filename"
 		raise Exception(error)
@@ -179,6 +193,7 @@ def init(params):
 		if(ret != None):
 			if(len(ret)>0):
 				if(is_email_valid(ret[0])):
+					print(ret[0])
 					dicc = {}
 					for entry in ret:
 						new = entry.split("=")
@@ -197,17 +212,17 @@ def init(params):
 		raise Exception(error)
 
 	if(len(to_params) < 1):
-		error = error_msg + " Target list is empty, check filename"
+		error = error_msg + " Target list is empty or it doesn't any valid mails, check filename"
 		raise Exception(error)
 
 	else:
 		server = open_server(conf)
-		print(to_params)
 		try:
 			for key in to_params:
 				text = parse_mail(mail,to_params[key],key)
 				message = MIMEText(text, "html")
 				send_mail(server,key,conf,message)
+			server.close()
 
 		except Exception as e:
 			raise Exception(e)

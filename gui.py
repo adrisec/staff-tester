@@ -19,6 +19,7 @@ class GUI():
 	It uses one window and two frames to navigate (main frame and settings frame)
 
 	TODO: Improve help frame
+	TODO: add customize feature at GUI
 	"""
 
 	def __init__(self):
@@ -226,6 +227,7 @@ class GUI():
 		str_text += "Author: Adrian Navas <adrian dot navas dot ajenjo1@gmail dot com>"
 		text.insert(END, str_text)
 		text.configure(state=DISABLED)
+
 
 	def get_target_file(self):
 		"""
