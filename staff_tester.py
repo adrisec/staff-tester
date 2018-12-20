@@ -193,7 +193,6 @@ def init(params):
 		if(ret != None):
 			if(len(ret)>0):
 				if(is_email_valid(ret[0])):
-					print(ret[0])
 					dicc = {}
 					for entry in ret:
 						new = entry.split("=")
