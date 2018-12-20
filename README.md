@@ -5,35 +5,6 @@ You can create your own HTML templates to send to your employees (or your compan
 
 The basic usage is to, using an SMTP server, send massively one email (using an HTML template to create it) to a list of target emails and then see wich ones trust the fake attack and wich ones report this phishing attack try.
 
-## How to create the email template?
-To create a new template, please use HTML format. You have one example template into template directory.
-To manage email design, use html tags.  
-To add images, please add them directly from internet (otherwise they are not going to be shown at the received email).  
-If you want to add any attachment to simulate an attack by an infected file. You can also change the showing name of the attachment in the main panel.  
-
-### Customizing mails
-To create a customized mail, you can use the new feature added. You can specify on the HTML template parameters by introducing them between brackets as at this example:
-```html
-	<html>
-  		<head></head>
-  		<body>
-    			<p>Hello [name]<br>
-       			Here is the <a href="[link]">payement</a> you wanted.
-    			</p>
-  		</body>
-	</html>
-```
-If you add customized parameters, you must to add them to your target list by adding them at each line using this syntax:
-<mail> <parameter1_name>=<parameter2_value> <parameter2_name>=<parameter2_value> ...  
-You can follow this example (using the parameters used in the previous example)
-```text
-	#Example target list file
-	mail@example.com name=George link=http://mailtophpfile.com?id=1
-	mail2@example.com name=Jane link=http://mailtophpfile.com?id=2
-	mail3@example.com name=Jacques link=http://mailtophpfile.com?id=3
-	mail4@example.com name=Jane link=http://mailtophpfile.com?id=4
-```
-Also if you add parameters, you must add them to every target added in your target list file.
 
 ## Supported platforms
 * Linux
@@ -69,12 +40,32 @@ Once installed, to run the GUI run this commands:
 ```
 
 # Configuration parameters
+
 To configure the target list add all the target mails (one per line)    
 You can use # to add one-line comment  
 
+## How to create the email template?
+To create a new template, please use HTML format. You have one example template into template directory.
+To manage email design, use html tags.  
+To add images, please add them directly from internet (otherwise they are not going to be shown at the received email).  
+If you want to add any attachment to simulate an attack by an infected file. You can also change the showing name of the attachment in the main panel.  
+
+### Customizing mails
+To create a customized mail, you can use the new feature added. You can specify on the HTML template parameters by introducing them between brackets as at this example:
+```html
+	<html>
+  		<head></head>
+  		<body>
+    			<p>Hello [name]<br>
+       			Here is the <a href="[link]">payement</a> you wanted.
+    			</p>
+  		</body>
+	</html>
+```
+
 If you add customized parameters, you must to add them to your target list by adding them at each line using this syntax:
 <mail> <parameter1_name>=<parameter2_value> <parameter2_name>=<parameter2_value> ...  
-You can follow this example:  
+You can follow this example (using the parameters used in the previous example)
 ```text
 	#Example target list file
 	mail@example.com name=George link=http://mailtophpfile.com?id=1
@@ -83,6 +74,7 @@ You can follow this example:
 	mail4@example.com name=Jane link=http://mailtophpfile.com?id=4
 ```
 Also if you add parameters, you must add them to every target added in your target list file.
+
 
 # Disclaimer
 This tool is only for testing or learning purposes and can only be used where strict consent has been given. Do not use this for any illegal purposes.   
