@@ -47,9 +47,9 @@ You need to have installed [Python 3.0 or higher](https://www.python.org/ftp/pyt
 
 Run this commands:
 ```bash
-	git clone https://github.com/adrinavaas/staff-tester.git
-	cd staff-tester
-	./python3 gui.py
+	C:\User>git clone https://github.com/adrinavaas/staff-tester.git
+	C:\User>cd staff-tester
+	C:\User>python3 gui.py
 ```
 
 ### Ubuntu/Debian
@@ -69,9 +69,20 @@ Once installed, to run the GUI run this commands:
 ```
 
 # Configuration parameters
-To configure the target list add all the target mails (one per line)   
-You can use # to add one-line comment
+To configure the target list add all the target mails (one per line)    
+You can use # to add one-line comment  
 
+If you add customized parameters, you must to add them to your target list by adding them at each line using this syntax:
+<mail> <parameter1_name>=<parameter2_value> <parameter2_name>=<parameter2_value> ...  
+You can follow this example:  
+```text
+	#Example target list file
+	mail@example.com name=George link=http://mailtophpfile.com?id=1
+	mail2@example.com name=Jane link=http://mailtophpfile.com?id=2
+	mail3@example.com name=Jacques link=http://mailtophpfile.com?id=3
+	mail4@example.com name=Jane link=http://mailtophpfile.com?id=4
+```
+Also if you add parameters, you must add them to every target added in your target list file.
 
 # Disclaimer
 This tool is only for testing or learning purposes and can only be used where strict consent has been given. Do not use this for any illegal purposes.   
