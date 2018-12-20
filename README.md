@@ -47,7 +47,7 @@ You can use # to add one-line comment
 ## How to create the email template?
 To create a new template, please use HTML format. You have one example template into template directory.
 To manage email design, use html tags.  
-To add images, please add them directly from internet (otherwise they are not going to be shown at the received email).  
+To add images, add them directly from internet (otherwise they are not going to be shown at the received email).  
 If you want to add any attachment to simulate an attack by an infected file. You can also change the showing name of the attachment in the main panel.  
 
 ### Customizing mails
@@ -76,6 +76,12 @@ You can follow this example (using the parameters used in the previous example)
 	mail4@example.com name=Jane link=http://mailtophpfile.com?id=4
 ```
 Also if you add parameters, you must add them to every target added in your target list file.
+
+
+## SMTP Server
+If you don't know how to use a SMTP server, you can try this tool by using the free Gmail SMTP server ([check more info here](https://www.lifewire.com/what-are-the-gmail-smtp-settings-1170854))
+If you have a corporative mail, maybe you can use your own SMTP server. If you don't know how to do it, ask to your hosting provider.
+Otherwise, you can use any other SMTP services. A simple Google search can help you with this configuration.
 
 
 # Disclaimer
