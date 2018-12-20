@@ -17,28 +17,45 @@ error_msg = "[!] ERROR:"
 #TODO: check user inputs to avoid possible attacks
 #TODO: documentation
 #TODO: management of owned employees (possible PHP to handle clicked links or downloaded attachments???????)
-
-def send_mail(conf,to):
-	"""Sends mails to all targets using conf dict creating a MIME message
+def open_server(conf):
+	"""Creates a server and the mime_message without the body
+	Sends mails to all targets using conf dict creating a MIME message
 
 
 	Params:
 	conf -- contains all info needed to connect the server and create the mail except the target list
-	to -- target list
+
 	
 	*conf dictionary has: smtp_user,smtp_password,body,sent_from,subject,smtp_server,smtp_port
-
-	TODO: check attachment in windows ("/" or "\"??)
+	
 	
 	"""
 	smtp_user = conf["smtp_user"] 
 	smtp_password = conf["smtp_password"]
 
-	message = conf["body"]
-	mime_message = MIMEMultipart()
-	message = MIMEText(message, "html")
 	
-	mime_message.attach(message)
+	try:  
+		server = smtplib.SMTP(conf["smtp_server"], conf["smtp_port"])
+		server.starttls()
+		server.ehlo()
+		server.login(smtp_user, smtp_password)
+		return server
+
+	except Exception as e:
+		raise Exception(e)
+
+def send_mail(server,to,conf,body):
+	"""Sends mails to all targets using conf dict creating a MIME message
+
+
+	Params:
+	server -- open SMTP server 
+	to -- target list
+	conf -- contains all info needed to create the mail except the target list
+	body -- contains the HTML mail body
+	
+	"""
+	mime_message = MIMEMultipart()
 
 	fattachment = conf["attachment"]
 	if(fattachment != ""):
@@ -52,20 +69,28 @@ def send_mail(conf,to):
 		mime_message.attach(attachment)
 
 	mime_message["From"] = conf["sent_from"]
-	
 	mime_message["Subject"] = conf["subject"]
-	try:  
-		server = smtplib.SMTP(conf["smtp_server"], conf["smtp_port"])
-		server.starttls()
-		server.ehlo()
-		server.login(smtp_user, smtp_password)
-		server.sendmail(conf["sent_from"], to, mime_message.as_string())
-		server.close()
-		return True
+	mime_message.attach(body)
 
-	except Exception as e:
-		raise Exception(e)
+	server.sendmail(conf["sent_from"], to, mime_message.as_string())
+	
 
+def parse_mail(text,params,mail):
+	body = ""
+	regex = re.compile(r"[^\[]*\[[^\]]+\][\[.\]]*")
+	regex_find = re.compile(r"\[[^\[ ]*\]")
+	for line in text:
+		line_aux = line
+		if(regex.match(line)):
+			for term in regex_find.findall(line):
+				if term[1:-1] in params:
+					line_aux = line_aux.replace(term, params[term[1:-1]])
+				else:
+					error_msg = "Key " + term[1:-1] + " not found. Check that var " 
+					error_msg += term[1:-1] + " is defined at " + mail + " entry"
+					raise Exception(error_msg)
+		body+=line_aux
+	return body
 
 def parse_line(line):
 	"""String parser that avoid comment lines (begins with #) and blank lines.
@@ -87,9 +112,9 @@ def parse_line(line):
 	if line[i] == "#":
 		return None
 	if(line[-1] == "\n"):
-		return line[0:-1].split("=")
+		return line[0:-1].split(" ")
 	else:
-		return line.split("=")
+		return line.split(" ")
 
 def is_email_valid(email):
 	"""Checks if an email is correct using a simple regex check
@@ -125,7 +150,6 @@ def init(params):
 	"""
 	conf = {}
 	conf_req = ["smtp_user","smtp_password","sent_from","subject","smtp_server","smtp_port"]
-	to = []
 
 	#Config params reading
 	
@@ -144,34 +168,46 @@ def init(params):
 			raise Exception(error)
 
 	#Target mails reading
+	to_params = {}
 	try:
-		g = open(params.ftarget.get(),"r")
+		g = open("mail.lst","r")
 	except:
 		error = error_msg + " can't open target list file, check filename"
 		raise Exception(error)
 	for line in g:
 		ret = parse_line(line)
 		if(ret != None):
-			if(len(ret)==1):
+			if(len(ret)>0):
 				if(is_email_valid(ret[0])):
-					to.append(ret[0])
+					dicc = {}
+					for entry in ret:
+						new = entry.split("=")
+						if(len(new)>1):
+							dicc[new[0]] = new[1]
+					to_params[ret[0]] = dicc
 	g.close()
 
+	
 	#mail reading
 	try:
 		h = open(params.fmail.get(),"r")
+		mail = h.readlines()
 	except:
-		error = error_msg + " an't open mail file, check filename"
-		raise Exception(e)
+		error = error_msg + " can't open mail file, check filename"
+		raise Exception(error)
 
-	conf["body"] = h.read()
-
-	if(len(to) < 1 and conf["body"] == None):
+	if(len(to_params) < 1):
 		error = error_msg + " Target list is empty, check filename"
 		raise Exception(error)
 
 	else:
+		server = open_server(conf)
+		print(to_params)
 		try:
-			send_mail(conf,to)
+			for key in to_params:
+				text = parse_mail(mail,to_params[key],key)
+				message = MIMEText(text, "html")
+				send_mail(server,key,conf,message)
+
 		except Exception as e:
 			raise Exception(e)

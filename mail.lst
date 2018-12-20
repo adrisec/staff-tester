@@ -1,1 +1,15 @@
-#mail list
+##############################################################################################
+# mail list
+# To add a comment use # at the begin of the line
+# To add target params use the next syntax:
+# <target email> <parameter1 name>=<parameter1 value> <parameter2 name>=<parameter2 value>
+# YOU CAN'T USE SPACES AT PARAMETER NAMES AND AT PARAMETER VALUES
+# IF YOU WANT TO USE SPACES, USE TWO PARAMETERS
+# You can follow this example to create your own template
+# Add at the HTML template your parameters between brackets [] -> [parameter 1]
+###############################################################################################
+
+mail@example.com name=George link=http://mailtophpfile.com?id=1
+mail2@example.com name=Jane link=http://mailtophpfile.com?id=2
+mail3@example.com name=Jacques link=http://mailtophpfile.com?id=3
+mail4@example.com name=Jane link=http://mailtophpfile.com?id=4
