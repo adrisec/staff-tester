@@ -79,9 +79,9 @@ Also if you add parameters, you must add them to every target added in your targ
 
 
 ## SMTP Server
-If you don't know how to use a SMTP server, you can try this tool by using the free Gmail SMTP server ([check more info here](https://www.lifewire.com/what-are-the-gmail-smtp-settings-1170854))
-If you have a corporative mail, maybe you can use your own SMTP server. If you don't know how to do it, ask to your hosting provider.
-Otherwise, you can use any other SMTP services. A simple Google search can help you with this configuration.
+If you don't know how to use a SMTP server, you can try this tool by using the free Gmail SMTP server ([check more info here](https://www.lifewire.com/what-are-the-gmail-smtp-settings-1170854))   
+If you have a corporative mail, maybe you can use your own SMTP server. If you don't know how to do it, ask to your hosting provider.   
+Otherwise, you can use any other SMTP services. A simple Google search can help you with this configuration.   
 
 
 # Disclaimer
