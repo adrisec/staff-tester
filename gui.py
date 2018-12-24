@@ -134,7 +134,7 @@ class GUI():
 		Save current session command
 		
 		"""
-		file = filedialog.asksaveasfile(title="Save File",mode='wb', filetypes =((("STF files", "*.stf"),
+		file = filedialog.asksaveasfile(title="Save File",mode='wb', defaultextension=".stf",filetypes =((("STF files", "*.stf"),
 											("All files", "*.*") )))
 		if(file != None):
 			dump = dumpObject(self.ftarget,self.fmail,self.fattachment,self.smtp_server,self.smtp_port,

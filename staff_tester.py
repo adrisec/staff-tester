@@ -73,7 +73,11 @@ def send_mail(server,to,conf,body):
 	mime_message["Subject"] = conf["subject"]
 	mime_message.attach(body)
 
-	server.sendmail(conf["sent_from"], to, mime_message.as_string())
+	try:
+		server.sendmail(conf["sent_from"], to, mime_message.as_string())
+	except Exception as e:
+		raise Exception(e)
+	return True
 	
 
 def parse_mail(text,params,mail):
@@ -184,7 +188,7 @@ def init(params):
 	#Target mails reading
 	to_params = {}
 	try:
-		g = open(params.ftarget.get(),"r")
+		g = open(params.ftarget.get(),"r",encoding="ISO-8859-1")
 	except:
 		error = error_msg + " can't open target list file, check filename"
 		raise Exception(error)
@@ -204,7 +208,7 @@ def init(params):
 	
 	#mail reading
 	try:
-		h = open(params.fmail.get(),"r")
+		h = open(params.fmail.get(),"r",encoding="ISO-8859-1")
 		mail = h.readlines()
 	except:
 		error = error_msg + " can't open mail file, check filename"
@@ -222,6 +226,7 @@ def init(params):
 				message = MIMEText(text, "html")
 				send_mail(server,key,conf,message)
 			server.close()
+			return True
 
 		except Exception as e:
 			raise Exception(e)
