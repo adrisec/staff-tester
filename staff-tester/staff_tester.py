@@ -16,7 +16,6 @@ error_msg = "[!] ERROR:"
 #TODO: add if it's possible more security to conections.
 #TODO: check user inputs to avoid possible attacks
 #TODO: documentation
-#TODO: add used libraries locally
 
 def open_server(conf):
 	"""Creates a server and the mime_message without the body

@@ -1,0 +1,11 @@
+GUI module:
+	-Add customize feature at GUI.
+	-Improve help frame.
+
+Main module:
+	-Add if it's possible more security to conections.
+	-Check user inputs to avoid possible attacks.
+	-Documentation.
+
+Misc:
+	-Add Windows exe and Debian binary executables
