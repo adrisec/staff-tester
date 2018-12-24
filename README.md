@@ -8,7 +8,7 @@ The basic use of it is, using an SMTP server, sending massively one email (using
 
 ## Supported platforms
 * Linux
-* Windows
+* !! Not working in Windows - Need to check charset codec errors
 * Not tested in MAC OS X
 
 # Installation
