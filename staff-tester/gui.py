@@ -45,7 +45,7 @@ class GUI():
 		menu = Menu(self.main)
 		self.main.config(menu=menu)
 		
-		self.main.call('wm','iconphoto',self.main._w,tkinter.Image("photo", file="media/icon.png"))
+		#self.main.call('wm','iconphoto',self.main._w,tkinter.Image("photo", file="../media/icon.png"))
 
 		mainmenu = Menu(menu)
 		menu.add_cascade(label="File", menu=mainmenu)
@@ -291,8 +291,3 @@ class dumpObject():
 		self.sent_from = sent_from.get()
 		self.subject = subject.get()
 		self.attachment_name = attachment_name.get()
-
-
-if __name__ == '__main__':
-	gui = GUI()
-	gui.main.mainloop()

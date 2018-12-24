@@ -8,7 +8,7 @@ The basic use of it is, using an SMTP server, sending massively one email (using
 
 ## Supported platforms
 * Linux
-* !! Not working in some Windows - Need to check charset codec errors
+* !! Not working in some Windows - Need to check more charset codec errors
 * Not tested in MAC OS X
 
 # Installation
@@ -20,23 +20,25 @@ Run this commands:
 ```bash
 	C:\User>git clone https://github.com/adrinavaas/staff-tester.git
 	C:\User>cd staff-tester
-	C:\User>python3 gui.py
+	C:\User>python3 setup.py install
+	C:\User>python3 staff-tester
 ```
 
 ### Ubuntu/Debian
 You need to have installed Python 3.0 or higher and git
 
 
-Run this commands to install all requirements:
+Run this commands to install all basic requirements:
 ```bash
 	$ apt-get install git
 	$ apt-get install python3
 ```
-Once installed, to run the GUI run this commands:
+Once installed, to install and run the GUI run this commands:
 ```bash
 	$ git clone https://github.com/adrinavaas/staff-tester.git
 	$ cd staff-tester
-	$ ./python3 gui.py
+	$ python3 setup.py install
+	$ python3 staff-tester
 ```
 
 # Configuration parameters
