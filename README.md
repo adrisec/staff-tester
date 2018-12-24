@@ -8,7 +8,7 @@ The basic use of it is, using an SMTP server, sending massively one email (using
 
 ## Supported platforms
 * Linux
-* !! Not working in some Windows - Need to check more charset codec errors
+* !! Not working with some Windows files (check templates and target lists charset)- Need to check more charset codec errors
 * Not tested in MAC OS X
 
 # Installation
@@ -41,6 +41,8 @@ Once installed, to install and run the GUI run this commands:
 	$ python3 staff-tester
 ```
 
+### Try without installing
+If you want to try this tool without installing it, you can enter in the staff-tester folder and run the __main__.py file.   
 # Configuration parameters
 
 To configure the target list add all the target emails (one per line)    
