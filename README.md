@@ -15,7 +15,7 @@ The basic use of it is, using an SMTP server, sending massively one email (using
 
 ### Windows
 #### Not developer:
-If you are not developer, you can use the executable (.EXE) file by downloading it [here](https://github.com/adrinavaas/staff-tester/blob/master/staff-tester.exe). You only need to download the file and open it to use the tool.
+If you are not developer, you can use the executable (.EXE) file by downloading it [here](https://github.com/adrinavaas/staff-tester/raw/master/staff-tester.exe).   You only need to download the file and open it to use the tool.
 
 #### Developer:
 You need to have installed [Python 3.0 or higher](https://www.python.org/ftp/python/3.7.1/Python-3.7.1.tar.xz) or higher and [git](https://code.google.com/p/msysgit/downloads/list)
