@@ -4,8 +4,8 @@ GUI module:
 
 Main module:
 	-Add if it's possible more security to conections.
-	-Check user inputs to avoid possible attacks.
+	-Check user inputs.
 	-Documentation.
 
 Misc:
-	-Add Windows exe and Debian binary executables
+	-Add Debian binary executables.
